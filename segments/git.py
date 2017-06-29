@@ -42,7 +42,9 @@ def get_git_status():
 
 def add_git_segment():
     # See http://git-blame.blogspot.com/2013/06/checking-current-branch-programatically.html
-    p = subprocess.Popen(['git', 'symbolic-ref', '-q', 'HEAD'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    p = subprocess.Popen(['git', 'symbolic-ref', '-q', 'HEAD'],
+        env={"LANG": "C", "HOME": os.getenv("HOME")},
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = p.communicate()
 
     if 'Not a git repo' in err:
